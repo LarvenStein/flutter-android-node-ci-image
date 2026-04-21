@@ -26,4 +26,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/LarvenStein/flutter-android-node-ci-image:latest
+          tags: ghcr.io/larvenstein/flutter-android-node-ci-image:latest
