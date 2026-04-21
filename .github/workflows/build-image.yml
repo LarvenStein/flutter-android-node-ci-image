@@ -1,0 +1,22 @@
+name: Build and Push CI Image
+
+on:
+  push:
+    branches: [ "main" ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Install buildah
+        run: apt-get update -qq && apt-get install -y buildah
+      - name: Build and push
+        run: |
+          echo ${{ secrets.CODEBERG_TOKEN }} | buildah login codeberg.org -u ${{ github.actor }} --password-stdin
+          buildah --storage-driver=vfs build --isolation=chroot --format=docker -t codeberg.org/vegan-inspector/flutter-android-node-ci-image:latest .
+          buildah --storage-driver=vfs push codeberg.org/vegan-inspector/flutter-android-node-ci-image:latest
