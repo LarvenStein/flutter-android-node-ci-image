@@ -3,20 +3,27 @@ name: Build and Push CI Image
 on:
   push:
     branches: [ "main" ]
-
   workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    permissions:
+      packages: write
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Install buildah
-        run: apt-get update -qq && apt-get install -y buildah
+
+      - name: Log in to GitHub registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Build and push
-        run: |
-          echo ${{ secrets.CODEBERG_TOKEN }} | buildah login codeberg.org -u ${{ github.actor }} --password-stdin
-          buildah --storage-driver=vfs build --isolation=chroot --format=docker -t codeberg.org/vegan-inspector/flutter-android-node-ci-image:latest .
-          buildah --storage-driver=vfs push codeberg.org/vegan-inspector/flutter-android-node-ci-image:latest
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: ghcr.io/LarvenStein/flutter-android-node-ci-image:latest
