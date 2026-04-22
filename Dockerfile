@@ -22,7 +22,9 @@ RUN yes | sdkmanager --licenses || true && \
                "platforms;android-35" \
                "platforms;android-36" \
                "build-tools;35.0.0" \
-               "ndk;28.2.13676358"    
+               "ndk;28.2.13676358" \
+               "cmake;3.22.1"
+
 # Flutter
 RUN git clone --depth 1 --branch stable https://github.com/flutter/flutter.git $FLUTTER_HOME
 ENV PATH=$PATH:$FLUTTER_HOME/bin
