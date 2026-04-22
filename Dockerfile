@@ -17,8 +17,12 @@ RUN mkdir -p $ANDROID_HOME/cmdline-tools && \
 ENV PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools
 
 RUN yes | sdkmanager --licenses || true && \
-    sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0" "ndk;27.0.12077973"
-    
+    sdkmanager "platform-tools" \
+               "platforms;android-34" \
+               "platforms;android-35" \
+               "platforms;android-36" \
+               "build-tools;35.0.0" \
+               "ndk;28.2.13676358"    
 # Flutter
 RUN git clone --depth 1 --branch stable https://github.com/flutter/flutter.git $FLUTTER_HOME
 ENV PATH=$PATH:$FLUTTER_HOME/bin
