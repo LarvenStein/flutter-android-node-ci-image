@@ -3,8 +3,17 @@ FROM debian:trixie-slim
 ENV ANDROID_HOME=/opt/android
 ENV FLUTTER_HOME=/opt/flutter
 
-# Java 21 
-RUN apt-get update -qq && apt-get install -y openjdk-21-jdk-headless && rm -rf /var/lib/apt/lists/*
+# Base dependencies
+RUN apt-get update -qq && apt-get install -y \
+    wget \
+    unzip \
+    curl \
+    git \
+    xz-utils \
+    libglu1-mesa \
+    openjdk-21-jdk-headless \
+    && rm -rf /var/lib/apt/lists/*
+
 ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
 
 # Android SDK
@@ -25,7 +34,7 @@ RUN yes | sdkmanager --licenses || true && \
                "ndk;28.2.13676358" \
                "cmake;3.22.1"
 
+# Flutter - pinned to exact version, no precache
 RUN git clone --depth 1 --branch 3.38.9 https://github.com/flutter/flutter.git $FLUTTER_HOME
 
 ENV PATH=$PATH:$FLUTTER_HOME/bin
-
