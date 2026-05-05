@@ -7,11 +7,16 @@ ENV FLUTTER_HOME=/opt/flutter
 RUN apt-get update -qq && apt-get install -y \
     wget \
     unzip \
+    zip \
     curl \
     git \
     xz-utils \
     libglu1-mesa \
     nodejs \
+    python3 \
+    bash \
+    file \
+    which \
     openjdk-21-jdk-headless \
     && rm -rf /var/lib/apt/lists/*
 
