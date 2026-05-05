@@ -11,6 +11,7 @@ RUN apt-get update -qq && apt-get install -y \
     git \
     xz-utils \
     libglu1-mesa \
+    nodejs \
     openjdk-21-jdk-headless \
     && rm -rf /var/lib/apt/lists/*
 
