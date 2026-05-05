@@ -3,9 +3,9 @@ FROM ghcr.io/catthehacker/ubuntu:act-latest
 ENV ANDROID_HOME=/opt/android
 ENV FLUTTER_HOME=/opt/flutter
 
-# Java
-RUN apt-get update -qq && apt-get install -y openjdk-17-jdk-headless && rm -rf /var/lib/apt/lists/*
-ENV JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+# Java 21 
+RUN apt-get update -qq && apt-get install -y openjdk-21-jdk-headless && rm -rf /var/lib/apt/lists/*
+ENV JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
 
 # Android SDK
 RUN mkdir -p $ANDROID_HOME/cmdline-tools && \
@@ -25,9 +25,7 @@ RUN yes | sdkmanager --licenses || true && \
                "ndk;28.2.13676358" \
                "cmake;3.22.1"
 
-# Flutter
-RUN git clone --depth 1 --branch 3.38.9 https://github.com/flutter/flutter.git $FLUTTER_HOME
+RUN git clone --depth 1 --branch stable https://github.com/flutter/flutter.git $FLUTTER_HOME
+
 ENV PATH=$PATH:$FLUTTER_HOME/bin
-ENV TAR_OPTIONS="--no-same-owner"
-RUN flutter precache --android --no-ios && \
-    chmod -R 777 /opt/flutter/bin/cache
+
