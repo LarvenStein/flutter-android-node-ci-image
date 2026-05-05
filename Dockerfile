@@ -26,7 +26,7 @@ RUN yes | sdkmanager --licenses || true && \
                "cmake;3.22.1"
 
 # Flutter
-RUN git clone --depth 1 --branch stable https://github.com/flutter/flutter.git $FLUTTER_HOME
+RUN git clone --depth 1 --branch 3.38.9 https://github.com/flutter/flutter.git $FLUTTER_HOME
 ENV PATH=$PATH:$FLUTTER_HOME/bin
 ENV TAR_OPTIONS="--no-same-owner"
 RUN flutter precache --android --no-ios && \
