@@ -1,4 +1,4 @@
-FROM ghcr.io/catthehacker/ubuntu:act-latest
+FROM debian:trixie-slim
 
 ENV ANDROID_HOME=/opt/android
 ENV FLUTTER_HOME=/opt/flutter
@@ -25,7 +25,7 @@ RUN yes | sdkmanager --licenses || true && \
                "ndk;28.2.13676358" \
                "cmake;3.22.1"
 
-RUN git clone --depth 1 --branch stable https://github.com/flutter/flutter.git $FLUTTER_HOME
+RUN git clone --depth 1 --branch 3.38.9 https://github.com/flutter/flutter.git $FLUTTER_HOME
 
 ENV PATH=$PATH:$FLUTTER_HOME/bin
 
