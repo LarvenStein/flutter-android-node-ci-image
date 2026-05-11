@@ -40,8 +40,14 @@ RUN yes | sdkmanager --licenses || true && \
                "ndk;28.2.13676358" \
                "cmake;3.22.1"
 
-RUN git clone --depth 1 https://github.com/flutter/flutter.git $FLUTTER_HOME && \
+# Flutter - pinned to exact tag commit via full clone
+RUN git clone https://github.com/flutter/flutter.git $FLUTTER_HOME && \
     cd $FLUTTER_HOME && \
-    git checkout 67323de285b9a3c5e0cbf3a8d0dd6c55a6a6e4cf
-    
+    git checkout 3.38.9
+
 ENV PATH=$PATH:$FLUTTER_HOME/bin
+ENV TAR_OPTIONS="--no-same-owner"
+
+# Pre-warm Flutter tool and Android artifacts
+RUN flutter precache --android && \
+    chmod -R 777 $FLUTTER_HOME/bin/cache
