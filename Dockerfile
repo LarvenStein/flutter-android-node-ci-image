@@ -40,7 +40,8 @@ RUN yes | sdkmanager --licenses || true && \
                "ndk;28.2.13676358" \
                "cmake;3.22.1"
 
-# Flutter - pinned to exact version, no precache
-RUN git clone --depth 1 --branch 3.38.9 https://github.com/flutter/flutter.git $FLUTTER_HOME
-
+RUN git clone --depth 1 https://github.com/flutter/flutter.git $FLUTTER_HOME && \
+    cd $FLUTTER_HOME && \
+    git checkout 67323de285b9a3c5e0cbf3a8d0dd6c55a6a6e4cf
+    
 ENV PATH=$PATH:$FLUTTER_HOME/bin
